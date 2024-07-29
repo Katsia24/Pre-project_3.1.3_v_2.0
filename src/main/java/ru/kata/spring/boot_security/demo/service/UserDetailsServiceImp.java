@@ -33,7 +33,6 @@ public class UserDetailsServiceImp implements UserDetailsService {
             throw new UsernameNotFoundException(String.format("No user found with username '%s'", username));
         }
         return new UserDetailsImp(user);
-//        new PersonDetails(person.get());
     }
 
 }
