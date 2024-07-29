@@ -1,0 +1,156 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Users</title>
+    <style>
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background-color: #f8f9fa;
+            margin: 20px;
+            padding: 0;
+        }
+
+        h1 {
+            text-align: center;
+            color: #343a40;
+            margin-bottom: 10px;
+        }
+
+        .container {
+            max-width: 800px;
+            margin: 0 auto;
+            background-color: #fff;
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 10px;
+        }
+
+        th, td {
+            padding: 12px;
+            border: 1px solid #000;
+
+            text-align: left;
+        }
+
+        th {
+            background-color: #007bff;
+            color: #fff;
+            font-weight: bold;
+        }
+
+        td {
+            background-color: #fff;
+        }
+
+        form {
+            margin-top: 20px;
+            padding: 20px;
+            border: 1px solid #ced4da;
+            border-radius: 4px;
+            background-color: #f8f9fa;
+        }
+
+        label {
+            display: block;
+            margin-bottom: 8px;
+            color: #495057;
+        }
+
+        input[type="text"], input[type="submit"] {
+            width: calc(100% - 12px);
+            padding: 8px;
+            margin-bottom: 10px;
+            border: 1px solid #ced4da;
+            border-radius: 4px;
+            box-sizing: border-box;
+        }
+
+        input[type="submit"] {
+            background-color: #28a745;
+            color: #fff;
+            cursor: pointer;
+        }
+
+        input[type="submit"]:hover {
+            background-color: #218838;
+        }
+    </style>
+
+</head>
+    <body>
+        <h1>Table of users</h1>
+        <div class="container">
+            <table>
+                <thead>
+                <tr>
+                    <th>Id</th>
+                    <th>Name</th>
+                    <th>Password</th>
+                    <th>email</th>
+                    <th>yearOfBirth</th>
+                    <th>Delete</th>
+                    <th>Update</th>
+                </tr>
+                </thead>
+
+                <tbody>
+                    <tr th:each="user : ${userList}">
+                        <td th:text="${user.id}">Id</td>
+                        <td th:text="${user.username}">username</td>
+                        <td th:text="${user.password}">password</td>
+                        <td th:text="${user.email}">email</td>
+                        <td th:text="${user.yearOfBirth}">yearOfBirth</td>
+
+                        <td>
+                            <form method="post" action="/deleteUser">
+                                <button type="submit" name="id" th:value="${user.id}">Delete</button>
+                            </form>
+                        </td>
+                        <td>
+                            <form method="get" action="/updateUser">
+                                <button type="submit" name="id" th:value="${user.id}">Update</button>
+                            </form>
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+
+            <form method="post" action="/addUser">
+                <label for="firstName_add">First Name</label>
+                <input name="firstName" type="text" id="firstName_add">
+                <br>
+                <label for="lastName_add">Last Name</label>
+                <input name="lastName" type="text" id="lastName_add">
+                <br>
+                <label for="email_add">User Email</label>
+                <input name="email" type="text" id="email_add">
+                <br>
+                <input type="submit" value="Add User">
+            </form>
+
+            <form method="post" action="/updateUser">
+                <label for="id_update">User ID</label>
+                <input name="id" type="number" id="id_update">
+                <br>
+                <label for="firstName_update">First Name</label>
+                <input name="firstName" type="text" id="firstName_update">
+                <br>
+                <label for="lastName_update">Last Name</label>
+                <input name="lastName" type="text" id="lastName_update">
+                <br>
+                <label for="email_update">User Email</label>
+                <input name="email" type="text" id="email_update">
+                <br>
+                <input type="submit" value="Update User">
+            </form>
+
+        </div>
+    </body>
+</html>
