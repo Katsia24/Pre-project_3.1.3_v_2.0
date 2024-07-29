@@ -23,34 +23,40 @@ public class AdminController {
         return "/admin/users";
     }
 
-//    @PostMapping("/addUser")
-//    public String addUser(@RequestParam("firstName") String firstName,
-//                          @RequestParam("lastName") String lastName,
-//                          @RequestParam("email") String email) {
-//        userService.add(new User(firstName, lastName, email));
-//        return "redirect:/users";
-//    }
-//
-//    @PostMapping("/deleteUser")
-//    public String deleteUser(@RequestParam("id") Long id) {
-//        userService.delete(userService.findById(id));
-//        return "redirect:/users";
-//    }
-//
-//    @PostMapping("/updateUser")
-//    public String updateUser(@ModelAttribute User user) {
-//        if (userService.findById(user.getId()) != null) {
-//            userService.update(user);
-//        }
-//        return "redirect:/users";
-//    }
-//
-//    @GetMapping(value = "/updateUser")
-//    public ModelAndView updateUserbyId(@RequestParam("id") Long id) {
-//        ModelAndView mav = new ModelAndView("userUpdate");
-//        User user = userService.findById(id);
-//        mav.addObject("user", user);
-//
-//        return mav;
-//    }
+    @PostMapping("/addUser")
+    public String addUser(@RequestParam("username") String username,
+                          @RequestParam("password") String password,
+                          @RequestParam(value = "email", required = false) String email,
+                          @RequestParam(value = "yearOfBirth", required = false) int yearOfBirth) {
+        User user = new User();
+        user.setUsername(username);
+        user.setPassword(password);
+        user.setEmail(email);
+        user.setYearOfBirth(yearOfBirth);
+        userService.add(user);
+        return "redirect:/admin/users";
+    }
+
+    @PostMapping("/deleteUser")
+    public String deleteUser(@RequestParam("id") Long id) {
+        userService.delete(userService.findById(id));
+        return "redirect:/admin/users";
+    }
+
+    @PostMapping("/updateUser")
+    public String updateUser(@ModelAttribute User user) {
+        if (userService.findById(user.getId()) != null) {
+            userService.update(user);
+        }
+        return "redirect:/admin/users";
+    }
+
+    @GetMapping(value = "/updateUser")
+    public ModelAndView updateUserbyId(@RequestParam("id") Long id) {
+        ModelAndView mav = new ModelAndView("userUpdate");
+        User user = userService.findById(id);
+        mav.addObject("user", user);
+
+        return mav;
+    }
 }
