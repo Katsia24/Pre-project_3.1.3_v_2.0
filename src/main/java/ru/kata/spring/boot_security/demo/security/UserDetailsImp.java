@@ -20,10 +20,11 @@ public class UserDetailsImp implements UserDetails {
         // SHOW_ACCOUNT, WITHDRAW_MONEY, SEND_MONEY
         // ROLE_ADMIN, ROLE_USER - это роли
 //        return Collections.singletonList(new SimpleGrantedAuthority(user.getRoles().toString()));
-        return user.getRoles();
-//        return user.getRoles().stream()
-//                .map(role -> new SimpleGrantedAuthority(role.getName()))
-//                .collect(Collectors.toList());
+//        return user.getRoles();
+        return user.getRoles().stream()
+                .map(role -> new SimpleGrantedAuthority(role.getName()))
+                .collect(Collectors.toList());
+
     }
 
 
