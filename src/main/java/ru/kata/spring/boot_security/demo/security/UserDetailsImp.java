@@ -17,10 +17,6 @@ public class UserDetailsImp implements UserDetails {
 
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {
-        // SHOW_ACCOUNT, WITHDRAW_MONEY, SEND_MONEY
-        // ROLE_ADMIN, ROLE_USER - это роли
-//        return Collections.singletonList(new SimpleGrantedAuthority(user.getRoles().toString()));
-//        return user.getRoles();
         return user.getRoles().stream()
                 .map(role -> new SimpleGrantedAuthority(role.getName()))
                 .collect(Collectors.toList());
@@ -59,7 +55,7 @@ public class UserDetailsImp implements UserDetails {
     }
 
     // Нужно, чтобы получать данные аутентифицированного пользователя
-    public User getUser() {
-        return this.user;
-    }
+//    public User getUser() {
+//        return this.user;
+//    }
 }

@@ -46,21 +46,9 @@ public class UserServiceImp implements UserService {
         userRepository.save(savedUser);
     }
 
-    @Transactional
-    @Override
-    public void delete(User user) {
-        userDao.delete(user);
-    }
-
     @Override
     public void delete(long id) {
         userRepository.deleteById(id);
-    }
-
-    @Override
-    @Transactional
-    public void update(User user) {
-        userDao.update(user);
     }
 
     @Override

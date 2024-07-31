@@ -9,11 +9,7 @@ public interface UserService {
 
     void save(User user, List<Long> roles);
 
-    void delete(User user);
-
     void delete(long id);
-
-    void update(User user);
 
     void update(User user, Long id, List<Long> roles);
 

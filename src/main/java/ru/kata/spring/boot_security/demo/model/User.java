@@ -1,8 +1,5 @@
 package ru.kata.spring.boot_security.demo.model;
 
-import org.springframework.security.core.GrantedAuthority;
-import org.springframework.security.core.userdetails.UserDetails;
-
 import javax.persistence.*;
 import java.util.Collection;
 
@@ -19,8 +16,8 @@ public class User {
 
     @ManyToMany(fetch = FetchType.EAGER)
     @JoinTable(name = "users_roles", joinColumns = @JoinColumn(name = "user_id"),
-                                    inverseJoinColumns = @JoinColumn(name = "role_id"))
-    private Collection <Role> roles;
+            inverseJoinColumns = @JoinColumn(name = "role_id"))
+    private Collection<Role> roles;
 
     private String email;
     private int yearOfBirth;

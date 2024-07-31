@@ -115,10 +115,6 @@
                             </form>
                         </td>
                         <td>
-<!--                            <form method="get" action="/admin/updateUser">-->
-<!--                                <button type="submit" name="id" th:value="${user.id}">Update</button>-->
-<!--                            </form>-->
-
                             <form th:method="GET" th:action="@{/admin/editUser(id=${user.getId()})}">
                                 <input type="submit" value="Edit"/>
                                 <input type="hidden" name="id" th:value="${user.getId()}"/>
@@ -131,24 +127,6 @@
             <form th:method="GET" th:action="@{/admin/newUser}">
                 <input type="submit" value="Add User"/>
             </form>
-
-<!--
-            <form method="post" action="/updateUser">
-                <label for="id_update">User ID</label>
-                <input name="id" type="number" id="id_update">
-                <br>
-                <label for="firstName_update">First Name</label>
-                <input name="firstName" type="text" id="firstName_update">
-                <br>
-                <label for="lastName_update">Last Name</label>
-                <input name="lastName" type="text" id="lastName_update">
-                <br>
-                <label for="email_update">User Email</label>
-                <input name="email" type="text" id="email_update">
-                <br>
-                <input type="submit" value="Update User">
-            </form>
--->
         </div>
 
         <form th:action="@{/logout}" method="post">
