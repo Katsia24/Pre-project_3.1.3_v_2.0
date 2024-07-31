@@ -109,12 +109,13 @@
                         <td th:text="${user.yearOfBirth}">yearOfBirth</td>
 
                         <td>
-                            <form method="post" action="/admin/deleteUser">
-                                <button type="submit" name="id" th:value="${user.id}">Delete</button>
+                            <form th:method="POST" th:action="@{/admin/deleteUser(id=${user.getId()})}">
+                                <input type="submit" value="Delete"/>
+                                <input type="hidden" name="id" th:value="${user.getId()}"/>
                             </form>
                         </td>
                         <td>
-                            <form method="get" action="/updateUser">
+                            <form method="get" action="/admin/updateUser">
                                 <button type="submit" name="id" th:value="${user.id}">Update</button>
                             </form>
                         </td>
@@ -122,22 +123,11 @@
                 </tbody>
             </table>
 
-            <form method="post" action="/addUser">
-                <label for="userName_add">User Name</label>
-                <input name="username" type="text" id="userName_add">
-                <br>
-                <label for="password_add">Password</label>
-                <input name="password" type="text" id="password_add">
-                <br>
-                <label for="email_add">User Email</label>
-                <input name="email" type="text" id="email_add">
-                <br>
-                <label for="yearOfBirth_add">yearOfBirth</label>
-                <input name="yearOfBirth" type="number" id="yearOfBirth_add">
-                <br>
-                <input type="submit" value="Add User">
+            <form th:method="GET" th:action="@{/admin/newUser}">
+                <input type="submit" value="Add User"/>
             </form>
 
+<!--
             <form method="post" action="/updateUser">
                 <label for="id_update">User ID</label>
                 <input name="id" type="number" id="id_update">
@@ -153,7 +143,9 @@
                 <br>
                 <input type="submit" value="Update User">
             </form>
-
+-->
         </div>
+
     </body>
+
 </html>
