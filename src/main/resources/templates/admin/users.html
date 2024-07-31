@@ -92,7 +92,7 @@
                 <tr>
                     <th>Id</th>
                     <th>Name</th>
-                    <th>Password</th>
+<!--                    <th>Password</th>-->
                     <th>email</th>
                     <th>yearOfBirth</th>
                     <th>Delete</th>
@@ -104,7 +104,7 @@
                     <tr th:each="user : ${userList}">
                         <td th:text="${user.id}">Id</td>
                         <td th:text="${user.username}">username</td>
-                        <td th:text="${user.password}">password</td>
+<!--                        <td th:text="${user.password}">password</td>-->
                         <td th:text="${user.email}">email</td>
                         <td th:text="${user.yearOfBirth}">yearOfBirth</td>
 
@@ -115,8 +115,13 @@
                             </form>
                         </td>
                         <td>
-                            <form method="get" action="/admin/updateUser">
-                                <button type="submit" name="id" th:value="${user.id}">Update</button>
+<!--                            <form method="get" action="/admin/updateUser">-->
+<!--                                <button type="submit" name="id" th:value="${user.id}">Update</button>-->
+<!--                            </form>-->
+
+                            <form th:method="GET" th:action="@{/admin/editUser(id=${user.getId()})}">
+                                <input type="submit" value="Edit"/>
+                                <input type="hidden" name="id" th:value="${user.getId()}"/>
                             </form>
                         </td>
                     </tr>
@@ -145,6 +150,12 @@
             </form>
 -->
         </div>
+
+        <form th:action="@{/logout}" method="post">
+            <br/>
+            <input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}"/>
+            <button type="submit">(Logout) Exit from account </button>
+        </form>
 
     </body>
 

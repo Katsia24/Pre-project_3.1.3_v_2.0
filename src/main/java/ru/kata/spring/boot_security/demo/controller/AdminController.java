@@ -2,6 +2,7 @@ package ru.kata.spring.boot_security.demo.controller;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.ui.ModelMap;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
@@ -28,6 +29,7 @@ public class AdminController {
     }
 
 
+    // работает
     @GetMapping(value = "/users")
     public String printUsers(ModelMap model) {
         model.addAttribute("userList", userService.listUsers());
@@ -35,6 +37,7 @@ public class AdminController {
         return "/admin/users";
     }
 
+    // работает
     @GetMapping("/newUser")
     public String newUser(ModelMap model) {
         model.addAttribute("user", new User());
@@ -42,6 +45,7 @@ public class AdminController {
         return "/admin/newUser";
     }
 
+    // работает
     @PostMapping("/newUser")
     public String addUser(@ModelAttribute("user") @Valid User user,
                           BindingResult bindingResult,
@@ -53,20 +57,6 @@ public class AdminController {
         return "redirect:/admin/users";
     }
 
-//    @PostMapping("/addUser")
-//    public String addUser(@RequestParam("username") String username,
-//                          @RequestParam("password") String password,
-//                          @RequestParam(value = "email", required = false) String email,
-//                          @RequestParam(value = "yearOfBirth", required = false) int yearOfBirth) {
-//        User user = new User();
-//        user.setUsername(username);
-//        user.setPassword(password);
-//        user.setEmail(email);
-//        user.setYearOfBirth(yearOfBirth);
-//        userService.add(user);
-//
-//        return "redirect:/admin/users";
-//    }
 
     // работает
     @PostMapping("/deleteUser")
@@ -75,24 +65,25 @@ public class AdminController {
         return "redirect:/admin/users";
     }
 
-    @PostMapping("/updateUser")
-    public String updateUser(@ModelAttribute User user) {
-        if (userService.findById(user.getId()) != null) {
-            userService.update(user);
+    // работает
+    @GetMapping("/editUser")
+    public String editUser(ModelMap model, @RequestParam("id") Long id) {
+        model.addAttribute("user", userService.findById(id));
+        model.addAttribute("roleList", roleRepository.findAll());
+        return "/admin/editUser";
+    }
+
+    // работает
+    @PostMapping("/editUser")
+    public String editUser(@ModelAttribute("user") @Valid User user,
+                           BindingResult bindingResult,
+                           @RequestParam("id") Long id,
+                           @RequestParam("roles") List<Long> roles) {
+        if (bindingResult.hasErrors()) {
+            return "/admin/editUser";
         }
+        userService.update(user, id, roles);
         return "redirect:/admin/users";
     }
 
-    // в отдельной html
-    @GetMapping(value = "/updateUser")
-    public ModelAndView updateUserById(@RequestParam("id") Long id) {
-        ModelAndView mav = new ModelAndView("admin/userUpdate");
-        User user = userService.findById(id);
-        mav.addObject("user", user);
-
-        List<Role> roles = (List<Role>) roleRepository.findAll();
-        mav.addObject("allRoles", roles);
-
-        return mav;
-    }
 }

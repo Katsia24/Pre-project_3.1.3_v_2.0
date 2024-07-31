@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>Add New User</title>
+    <title>Edit User Data</title>
     <style>
         body {
             font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
@@ -85,29 +85,34 @@
 </head>
 <body>
 
-<form th:method="post" th:action="@{/admin/newUser}" th:object="${user}">
-    <label for="userName_add">User Name</label>
-    <input type="text" th:field="*{username}" id="userName_add">
-    <div style="color:red" th:if="${#fields.hasErrors('username')}" th:errors="*{username}">Name Error</div>
-    <br>
-    <label for="password_add">Password</label>
-    <input type="password" th:field="*{password}" id="password_add">
+
+<form th:method="POST" th:action="@{/admin/editUser(id=${user.getId()})}" th:object="${user}">
+    <label>ID
+        <input name="id" type="number" th:value="${user.id}" readonly>
+    </label>
+    <label for="username">User Name </label>
+    <input type="text" th:field="*{username}" id="username"/>
+    <div style="color:red" th:if="${#fields.hasErrors('username')}" th:errors="*{username}">Username Error</div>
+    <br/>
+    <label for="password">Password  </label>
+    <input type="password" th:field="*{password}" id="password"/>
     <div style="color:red" th:if="${#fields.hasErrors('password')}" th:errors="*{password}">Password Error</div>
-    <br>
-    <label for="email_add">User Email</label>
-    <input type="email" th:field="*{email}" id="email_add">
+    <br/>
+    <label for="email">Email  </label>
+    <input type="email" th:field="*{email}" id="email"/>
     <div style="color:red" th:if="${#fields.hasErrors('email')}" th:errors="*{email}">Email Error</div>
-    <br>
+    <br/>
     <label for="yearOfBirth_add">yearOfBirth</label>
     <input type="number" th:field="*{yearOfBirth}" id="yearOfBirth_add">
     <div style="color:red" th:if="${#fields.hasErrors('yearOfBirth')}" th:errors="*{yearOfBirth}">Year Of Birth Error</div>
     <br>
 
+    <input type="hidden" name="roles" value=""/>
     <div th:each="role : ${roleList}">
         <input type="checkbox" th:text="${role.getAuthority()}" th:value="${role.getId()}" th:id="'role_' + ${role}" name="roles"/>
         <label th:for="'role_' + ${role}" ></label><br/>
     </div>
-    <input type="submit" value="Add User">
+    <input type="submit" value="Edit"/>
     <input type="hidden" name="id" th:value="${user.getId()}"/>
 </form>
 
@@ -116,7 +121,6 @@
     <input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}"/>
     <button type="submit">(Logout) Exit from account </button>
 </form>
-
 
 </body>
 </html>

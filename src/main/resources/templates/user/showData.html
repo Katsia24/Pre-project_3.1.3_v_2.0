@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>User Data</title>
+</head>
+<body>
+<h1>Table about user</h1>
+
+    <table>
+        <thead>
+        <tr>
+            <th>Id</th>
+            <th>Name</th>
+            <!--                    <th>Password</th>-->
+            <th>email</th>
+            <th>yearOfBirth</th>
+        </tr>
+        </thead>
+
+        <tbody>
+        <tr>
+<!--        <tr th:each="user : ${userList}">-->
+            <td th:text="${user.getId()}">Id</td>
+            <td th:text="${user.getUsername()}">Username</td>
+            <!--                        <td th:text="${user.password}">password</td>-->
+            <td th:text="${user.getEmail()}">email</td>
+            <td th:text="${user.getYearOfBirth()}">yearOfBirth</td>
+
+        </tr>
+        </tbody>
+    </table>
+
+
+<form th:action="@{/logout}" th:method="POST">
+    <input type="submit" value="Logout" />
+</form>
+</body>
+</html>
