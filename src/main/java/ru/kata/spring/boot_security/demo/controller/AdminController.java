@@ -63,7 +63,7 @@ public class AdminController {
     // работает
     @GetMapping("/editUser")
     public String editUser(ModelMap model, @RequestParam("id") Long id) {
-        model.addAttribute("user", userService.findById(id));
+        model.addAttribute("user", userService.getById(id));
         model.addAttribute("roleList", roleRepository.findAll());
         return "/admin/editUser";
     }
