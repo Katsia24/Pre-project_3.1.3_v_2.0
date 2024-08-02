@@ -2,30 +2,28 @@ package ru.kata.spring.boot_security.demo.service;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.userdetails.UserDetails;
-import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import ru.kata.spring.boot_security.demo.model.Role;
 import ru.kata.spring.boot_security.demo.model.User;
-import ru.kata.spring.boot_security.demo.repository.RoleRepository;
 import ru.kata.spring.boot_security.demo.repository.UserRepository;
 
 import java.util.HashSet;
 import java.util.List;
 
 @Service
-public class UserServiceImp implements UserService, UserDetailsService {
+public class UserServiceImp implements UserService {
 
     private final UserRepository userRepository;
-    private final RoleRepository roleRepository;
+    private final RoleService roleService;
     private final PasswordEncoder passwordEncoder;
 
     @Autowired
-    public UserServiceImp(UserRepository userRepository, RoleRepository roleRepository, PasswordEncoder passwordEncoder) {
+    public UserServiceImp(UserRepository userRepository, RoleService roleService, PasswordEncoder passwordEncoder) {
         this.userRepository = userRepository;
-        this.roleRepository = roleRepository;
+        this.roleService = roleService;
         this.passwordEncoder = passwordEncoder;
     }
 
@@ -34,7 +32,7 @@ public class UserServiceImp implements UserService, UserDetailsService {
     public void save(User user, List<Long> roles) {
         User savedUser = userRepository.save(user);
         savedUser.setPassword(passwordEncoder.encode(user.getPassword()));
-        List<Role> savedRoles = roleRepository.findAllById(roles);
+        List<Role> savedRoles = roleService.findAllById(roles);
         savedUser.setRoles(new HashSet<>(savedRoles));
         userRepository.save(savedUser);
     }
@@ -52,7 +50,7 @@ public class UserServiceImp implements UserService, UserDetailsService {
         savedUser.setPassword(passwordEncoder.encode(user.getPassword()));
         savedUser.setEmail(user.getEmail());
         savedUser.setYearOfBirth(user.getYearOfBirth());
-        List<Role> savedRoles = roleRepository.findAllById(roles);
+        List<Role> savedRoles = roleService.findAllById(roles);
         savedUser.setRoles(new HashSet<>(savedRoles));
         userRepository.save(savedUser);
     }

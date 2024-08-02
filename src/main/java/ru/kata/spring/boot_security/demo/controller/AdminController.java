@@ -5,7 +5,7 @@ import org.springframework.ui.ModelMap;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 import ru.kata.spring.boot_security.demo.model.User;
-import ru.kata.spring.boot_security.demo.repository.RoleRepository;
+import ru.kata.spring.boot_security.demo.service.RoleService;
 import ru.kata.spring.boot_security.demo.service.UserService;
 
 import javax.validation.Valid;
@@ -16,11 +16,11 @@ import java.util.List;
 public class AdminController {
 
     private final UserService userService;
-    private final RoleRepository roleRepository;
+    private final RoleService roleService;
 
-    public AdminController(UserService userService, RoleRepository roleRepository) {
+    public AdminController(UserService userService, RoleService roleService) {
         this.userService = userService;
-        this.roleRepository = roleRepository;
+        this.roleService = roleService;
     }
 
 
@@ -28,7 +28,7 @@ public class AdminController {
     @GetMapping(value = "/users")
     public String printUsers(ModelMap model) {
         model.addAttribute("userList", userService.listUsers());
-        model.addAttribute("roleList", roleRepository.findAll());
+        model.addAttribute("roleList", roleService.findAll());
         return "/admin/users";
     }
 
@@ -36,7 +36,7 @@ public class AdminController {
     @GetMapping("/newUser")
     public String newUser(ModelMap model) {
         model.addAttribute("user", new User());
-        model.addAttribute("roleList", roleRepository.findAll());
+        model.addAttribute("roleList", roleService.findAll());
         return "/admin/newUser";
     }
 
@@ -64,7 +64,7 @@ public class AdminController {
     @GetMapping("/editUser")
     public String editUser(ModelMap model, @RequestParam("id") Long id) {
         model.addAttribute("user", userService.getById(id));
-        model.addAttribute("roleList", roleRepository.findAll());
+        model.addAttribute("roleList", roleService.findAll());
         return "/admin/editUser";
     }
 

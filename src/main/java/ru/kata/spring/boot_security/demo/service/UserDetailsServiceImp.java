@@ -27,7 +27,6 @@ public class UserDetailsServiceImp implements UserDetailsService {
         if (user == null) {
             throw new UsernameNotFoundException(String.format("No user found with username '%s'", username));
         }
-//        return new UserDetailsImp(user);
         return user;
     }
 
