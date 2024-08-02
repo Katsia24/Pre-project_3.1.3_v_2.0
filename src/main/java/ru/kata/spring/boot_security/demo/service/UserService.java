@@ -17,4 +17,7 @@ public interface UserService {
 
     List<User> listUsers();
 
+    //временный
+    User findByUsername(String username);
+
 }
