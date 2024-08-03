@@ -21,17 +21,17 @@ public class User implements UserDetails {
     private String username;
     private String password;
 
-    //    !!! DONT WORK !!!
-//    @ManyToMany
-//    @JoinTable(name = "users_roles",
-//            joinColumns = @JoinColumn(name = "user_id"),
-//            inverseJoinColumns = @JoinColumn(name = "role_id"))
-//    private Set<Role> roles;
-//    !!! WORK !!!
-    @ManyToMany(fetch = FetchType.EAGER)
-    @JoinTable(name = "users_roles", joinColumns = @JoinColumn(name = "user_id"),
+//        !!! DONT WORK !!!
+    @ManyToMany
+    @JoinTable(name = "users_roles",
+            joinColumns = @JoinColumn(name = "user_id"),
             inverseJoinColumns = @JoinColumn(name = "role_id"))
     private Set<Role> roles;
+//    !!! WORK !!!
+//    @ManyToMany(fetch = FetchType.EAGER)
+//    @JoinTable(name = "users_roles", joinColumns = @JoinColumn(name = "user_id"),
+//            inverseJoinColumns = @JoinColumn(name = "role_id"))
+//    private Set<Role> roles;
 
     private String email;
     private int yearOfBirth;
