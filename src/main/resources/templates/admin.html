@@ -7,8 +7,12 @@
 <h1>User, welcome spring boot security page!</h1>
 <h1>FOR ROLE_ADMIN</h1>
 
+<form th:action="@{/user}" th:method="GET">
+    <input type="submit" value="user"/>
+</form>
+
 <form th:action="@{/admin/users}" th:method="GET">
-    <input type="submit" value="Users"/>
+    <input type="submit" value="All Users"/>
 </form>
 
 <form th:action="@{/logout}" th:method="POST">

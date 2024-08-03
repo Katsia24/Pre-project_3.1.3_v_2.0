@@ -5,6 +5,7 @@ import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 
 import javax.persistence.*;
+import javax.persistence.criteria.Join;
 import java.util.Collection;
 import java.util.Set;
 import java.util.stream.Collectors;
@@ -20,6 +21,13 @@ public class User implements UserDetails {
     private String username;
     private String password;
 
+    //    !!! DONT WORK !!!
+//    @ManyToMany
+//    @JoinTable(name = "users_roles",
+//            joinColumns = @JoinColumn(name = "user_id"),
+//            inverseJoinColumns = @JoinColumn(name = "role_id"))
+//    private Set<Role> roles;
+//    !!! WORK !!!
     @ManyToMany(fetch = FetchType.EAGER)
     @JoinTable(name = "users_roles", joinColumns = @JoinColumn(name = "user_id"),
             inverseJoinColumns = @JoinColumn(name = "role_id"))
@@ -76,9 +84,7 @@ public class User implements UserDetails {
 
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {
-        return this.getRoles().stream()
-                .map(role -> new SimpleGrantedAuthority(role.getName()))
-                .collect(Collectors.toList());
+        return roles;
     }
 
     @Override
@@ -125,7 +131,6 @@ public class User implements UserDetails {
                 ", password='" + password + '\'' +
                 '}';
     }
-
 
 
 }

@@ -129,6 +129,10 @@
             </form>
         </div>
 
+        <form th:action="@{/admin}" th:method="GET">
+            <input type="submit" value="Admin Page"/>
+        </form>
+
         <form th:action="@{/logout}" method="post">
             <br/>
             <input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}"/>
