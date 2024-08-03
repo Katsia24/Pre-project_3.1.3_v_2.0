@@ -23,8 +23,6 @@ public class AdminController {
         this.roleService = roleService;
     }
 
-
-    // работает
     @GetMapping(value = "/users")
     public String printUsers(ModelMap model) {
         model.addAttribute("userList", userService.listUsers());
@@ -32,7 +30,6 @@ public class AdminController {
         return "/admin/users";
     }
 
-    // работает
     @GetMapping("/newUser")
     public String newUser(ModelMap model) {
         model.addAttribute("user", new User());
@@ -40,7 +37,6 @@ public class AdminController {
         return "/admin/newUser";
     }
 
-    // работает
     @PostMapping("/newUser")
     public String addUser(@ModelAttribute("user") @Valid User user,
                           BindingResult bindingResult,
@@ -52,15 +48,12 @@ public class AdminController {
         return "redirect:/admin/users";
     }
 
-
-    // работает
     @PostMapping("/deleteUser")
     public String deleteUser(@RequestParam("id") Long id) {
         userService.delete(id);
         return "redirect:/admin/users";
     }
 
-    // работает
     @GetMapping("/editUser")
     public String editUser(ModelMap model, @RequestParam("id") Long id) {
         model.addAttribute("user", userService.getById(id));
@@ -68,7 +61,6 @@ public class AdminController {
         return "/admin/editUser";
     }
 
-    // работает
     @PostMapping("/editUser")
     public String editUser(@ModelAttribute("user") @Valid User user,
                            BindingResult bindingResult,

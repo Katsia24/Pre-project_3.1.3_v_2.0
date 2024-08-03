@@ -3,9 +3,9 @@ package ru.kata.spring.boot_security.demo.service;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
-import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
 import ru.kata.spring.boot_security.demo.model.Role;
 import ru.kata.spring.boot_security.demo.model.User;
@@ -13,27 +13,28 @@ import ru.kata.spring.boot_security.demo.repository.UserRepository;
 
 import java.util.HashSet;
 import java.util.List;
-import java.util.Set;
 
 @Service
 public class UserServiceImp implements UserService {
 
     private final UserRepository userRepository;
     private final RoleService roleService;
-    private final PasswordEncoder passwordEncoder;
 
     @Autowired
-    public UserServiceImp(UserRepository userRepository, RoleService roleService, PasswordEncoder passwordEncoder) {
+    public UserServiceImp(UserRepository userRepository, RoleService roleService) {
         this.userRepository = userRepository;
         this.roleService = roleService;
-        this.passwordEncoder = passwordEncoder;
+    }
+
+    public PasswordEncoder getPasswordEncoder() {
+        return new BCryptPasswordEncoder();
     }
 
     @Override
     @Transactional
     public void save(User user, List<Long> roles) {
         User savedUser = userRepository.save(user);
-        savedUser.setPassword(passwordEncoder.encode(user.getPassword()));
+        savedUser.setPassword(getPasswordEncoder().encode(user.getPassword()));
         List<Role> savedRoles = roleService.findAllById(roles);
         savedUser.setRoles(new HashSet<>(savedRoles));
         userRepository.save(savedUser);
@@ -49,7 +50,7 @@ public class UserServiceImp implements UserService {
     public void update(User user, Long id, List<Long> roles) {
         User savedUser = userRepository.getById(id);
         savedUser.setUsername(user.getUsername());
-        savedUser.setPassword(passwordEncoder.encode(user.getPassword()));
+        savedUser.setPassword(getPasswordEncoder().encode(user.getPassword()));
         savedUser.setEmail(user.getEmail());
         savedUser.setYearOfBirth(user.getYearOfBirth());
         List<Role> savedRoles = roleService.findAllById(roles);

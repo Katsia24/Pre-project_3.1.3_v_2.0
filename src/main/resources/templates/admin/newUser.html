@@ -102,11 +102,13 @@
     <input type="number" th:field="*{yearOfBirth}" id="yearOfBirth_add">
     <div style="color:red" th:if="${#fields.hasErrors('yearOfBirth')}" th:errors="*{yearOfBirth}">Year Of Birth Error</div>
     <br>
-
     <div th:each="role : ${roleList}">
-        <input type="checkbox" th:text="${role.getAuthority()}" th:value="${role.getId()}" th:id="'role_' + ${role}" name="roles"/>
-        <label th:for="'role_' + ${role}" ></label><br/>
+        <label th:for="'role_' + ${role}">
+            <input type="checkbox" th:text="${role.getAuthority()}" th:value="${role.getId()}" th:id="'role_' + ${role}" name="roles"/>
+        </label>
     </div>
+    <br/>
+
     <input type="submit" value="Add User">
     <input type="hidden" name="id" th:value="${user.getId()}"/>
 </form>
